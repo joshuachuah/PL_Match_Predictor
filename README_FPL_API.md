@@ -1,6 +1,6 @@
 # FPL API Premier League Match Predictor
 
-This program uses the Fantasy Premier League (FPL) API to predict upcoming Premier League match outcomes. It replaces the CSV-based approach with real-time data from the official FPL API.
+This program uses the Fantasy Premier League (FPL) API to predict upcoming Premier League match outcomes.
 
 ## Features
 

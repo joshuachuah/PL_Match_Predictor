@@ -369,9 +369,9 @@ class FPLMatchPredictor:
         
         # Map prediction to readable format with team names
         outcome_map = {
-            'H': f'{home_team_name} Win', 
+            'H': f'{home_team_name}', 
             'D': 'Draw', 
-            'A': f'{away_team_name} Win'
+            'A': f'{away_team_name}'
         }
         class_labels = self.model.classes_
         

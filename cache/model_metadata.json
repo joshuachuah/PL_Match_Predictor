@@ -1,0 +1,45 @@
+{
+  "trained_at": "2025-09-24T23:06:49.501014",
+  "feature_names": [
+    "home_overall_strength",
+    "home_attack_strength",
+    "home_defence_strength",
+    "home_avg_form",
+    "home_ict",
+    "home_recent_points",
+    "home_recent_goals_scored",
+    "home_recent_goals_conceded",
+    "home_recent_goal_difference",
+    "home_recent_wins",
+    "away_overall_strength",
+    "away_attack_strength",
+    "away_defence_strength",
+    "away_avg_form",
+    "away_ict",
+    "away_recent_points",
+    "away_recent_goals_scored",
+    "away_recent_goals_conceded",
+    "away_recent_goal_difference",
+    "away_recent_wins",
+    "attack_vs_defence_home",
+    "attack_vs_defence_away",
+    "form_difference",
+    "recent_points_difference",
+    "recent_goal_diff_difference"
+  ],
+  "training_metadata": {
+    "training_samples": 430,
+    "test_accuracy": 0.5348837209302325,
+    "best_cv_score": 0.43798449612403106,
+    "best_params": {
+      "max_depth": 5,
+      "min_samples_leaf": 4,
+      "min_samples_split": 10,
+      "n_estimators": 200
+    },
+    "training_time": "2025-09-24T23:06:49.479668",
+    "current_gameweek": 5
+  },
+  "model_version": "1.0",
+  "has_feature_selector": true
+}

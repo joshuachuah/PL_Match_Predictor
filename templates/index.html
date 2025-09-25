@@ -237,7 +237,21 @@
 
             let probsHtml = '';
             if (match.probabilities && Object.keys(match.probabilities).length > 0) {
-                probsHtml = Object.entries(match.probabilities)
+                // Sort probabilities to ensure Draw is always in the middle
+                const outcomes = Object.entries(match.probabilities);
+                const sortedOutcomes = outcomes.sort(([outcomeA], [outcomeB]) => {
+                    // Define the desired order: Home team (0), Draw (1), Away team (2)
+                    const getOrder = (outcome) => {
+                        if (outcome === match.home_team) return 0;
+                        if (outcome === 'Draw') return 1;
+                        if (outcome === match.away_team) return 2;
+                        return 3; // fallback
+                    };
+                    
+                    return getOrder(outcomeA) - getOrder(outcomeB);
+                });
+                
+                probsHtml = sortedOutcomes
                     .map(([outcome, prob]) => {
                         const percentage = Math.round(prob * 100);
                         const isSelected = outcome === match.prediction;
@@ -267,9 +281,6 @@
                         <div class="prediction-text">
                             <i class="fas fa-trophy"></i>
                             <strong>${match.prediction}</strong>
-                        </div>
-                        <div class="confidence confidence-${confidenceClass}">
-                            ${confidence}% confidence
                         </div>
                     </div>
                     <div class="probabilities">

@@ -3,95 +3,190 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Premier League Match Predictor</title>
+    
+    <!-- Primary Meta Tags -->
+    <title>PremierProphet - AI-Powered Premier League Predictions | FPL Analytics</title>
+    <meta name="title" content="PremierProphet - AI-Powered Premier League Predictions">
+    <meta name="description" content="Get accurate Premier League match predictions powered by machine learning and real-time FPL data. Predict scores, outcomes, and probabilities for upcoming fixtures with our advanced AI model.">
+    <meta name="keywords" content="PremierProphet, Premier League predictions, football match predictor, FPL analytics, soccer predictions, machine learning football, Premier League fixtures, football AI, match outcome predictor, EPL predictions, football analytics">
+    <meta name="author" content="PremierProphet">
+    <meta name="robots" content="index, follow">
+    <link rel="canonical" href="https://premierprophet.dev">
+    
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://premierprophet.dev">
+    <meta property="og:title" content="PremierProphet - AI-Powered Premier League Predictions">
+    <meta property="og:description" content="Get accurate Premier League match predictions powered by machine learning and real-time FPL data. Predict scores, outcomes, and probabilities for upcoming fixtures.">
+    <meta property="og:image" content="https://premierprophet.dev/static/og-image.png">
+    <meta property="og:image:width" content="1200">
+    <meta property="og:image:height" content="630">
+    <meta property="og:site_name" content="PremierProphet">
+    <meta property="og:locale" content="en_US">
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image">
+    <meta property="twitter:url" content="https://premierprophet.dev">
+    <meta property="twitter:title" content="PremierProphet - AI-Powered Premier League Predictions">
+    <meta property="twitter:description" content="Get accurate Premier League match predictions powered by machine learning and real-time FPL data.">
+    <meta property="twitter:image" content="https://premierprophet.dev/static/twitter-image.png">
+
+    <!-- Additional SEO Meta Tags -->
+    <meta name="theme-color" content="#37003c">
+    <meta name="msapplication-TileColor" content="#37003c">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <meta name="apple-mobile-web-app-title" content="PL Predictor">
+    
+    <!-- Performance and Loading -->
+    <meta name="format-detection" content="telephone=no">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="referrer" content="strict-origin-when-cross-origin">
+    <meta http-equiv="X-Content-Type-Options" content="nosniff">
+    <meta http-equiv="X-Frame-Options" content="DENY">
+    <meta http-equiv="X-XSS-Protection" content="1; mode=block">
+    <link rel="dns-prefetch" href="//fonts.googleapis.com">
+    <link rel="dns-prefetch" href="//cdnjs.cloudflare.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="prefetch" href="/api/status">
+    
+    <!-- Favicon -->
+    <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='favicon.ico') }}">
+    <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='apple-touch-icon.png') }}">
+    <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='favicon-32x32.png') }}">
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='favicon-16x16.png') }}">
+    <link rel="manifest" href="{{ url_for('static', filename='site.webmanifest') }}">
+
+    <!-- Stylesheets -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+        "@context": "https://schema.org",
+        "@type": "WebApplication",
+        "name": "PremierProphet",
+        "url": "https://premierprophet.dev",
+        "description": "AI-powered Premier League match prediction tool using real-time FPL data and machine learning algorithms",
+        "applicationCategory": "SportsApplication",
+        "operatingSystem": "Web Browser",
+        "offers": {
+            "@type": "Offer",
+            "price": "0",
+            "priceCurrency": "USD"
+        },
+        "creator": {
+            "@type": "Organization",
+            "name": "PremierProphet",
+            "url": "https://premierprophet.dev"
+        },
+        "mainEntity": {
+            "@type": "SportsEvent",
+            "@id": "https://premierprophet.dev/#premier-league-predictions",
+            "name": "Premier League Match Predictions",
+            "sport": "Soccer",
+            "description": "Real-time predictions for Premier League football matches using machine learning"
+        },
+        "keywords": ["Premier League", "Football Predictions", "Machine Learning", "FPL", "Soccer Analytics"],
+        "audience": {
+            "@type": "Audience",
+            "audienceType": "Football Fans, Fantasy Premier League Players, Sports Bettors"
+        }
+    }
+    </script>
 </head>
 <body>
+    
     <div class="container">
-        <!-- Header -->
-        <header class="header">
+        <header class="header" role="banner">
             <div class="header-content">
                 <div class="logo">
-                    <i class="fas fa-futbol"></i>
-                    <h1>Premier League Match Predictor</h1>
+                    <i class="fas fa-futbol" aria-hidden="true"></i>
+                    <h1>PremierProphet</h1>
                 </div>
-                <p class="subtitle">AI-powered predictions using live FPL data</p>
+                <p class="subtitle">AI-powered Premier League predictions using live FPL data and machine learning</p>
             </div>
         </header>
 
-        <!-- Status Section -->
-        <section class="status-section">
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="fas fa-chart-line"></i> System Status</h2>
-                </div>
-                <div class="card-content">
-                    <div id="status-content">
-                        <div class="status-item">
-                            <span class="status-label">Model Status:</span>
-                            <span id="model-status" class="status-badge status-pending">Not Initialized</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-label">Current Gameweek:</span>
-                            <span id="current-gw" class="status-value">-</span>
-                        </div>
-                        <div class="status-item">
-                            <span class="status-label">Next Gameweek:</span>
-                            <span id="next-gw" class="status-value">-</span>
+        <main role="main" id="main-content" class="main-content">
+            <!-- Status section hidden for cleaner interface -->
+            <section class="status-section" aria-labelledby="status-heading" style="display: none;">
+                <article class="card">
+                    <header class="card-header">
+                        <h2 id="status-heading"><i class="fas fa-chart-line" aria-hidden="true"></i> System Status</h2>
+                    </header>
+                    <div class="card-content">
+                        <dl id="status-content">
+                            <div class="status-item">
+                                <dt class="status-label">Model Status:</dt>
+                                <dd id="model-status" class="status-badge status-pending">Not Initialized</dd>
+                            </div>
+                            <div class="status-item">
+                                <dt class="status-label">Current Gameweek:</dt>
+                                <dd id="current-gw" class="status-value">-</dd>
+                            </div>
+                            <div class="status-item">
+                                <dt class="status-label">Next Gameweek:</dt>
+                                <dd id="next-gw" class="status-value">-</dd>
+                            </div>
+                        </dl>
+                        <div id="status-message" class="status-message" role="status" aria-live="polite"></div>
+                    </div>
+                </article>
+            </section>
+
+            <!-- Control buttons hidden for cleaner interface -->
+            <section class="control-section" aria-labelledby="control-heading" style="display: none;">
+                <article class="card">
+                    <div class="card-content">
+                        <h2 id="control-heading" class="sr-only">Prediction Controls</h2>
+                        <div class="control-buttons" role="group" aria-label="Prediction control buttons">
+                            <button id="init-btn" class="btn btn-primary" type="button" aria-describedby="init-description">
+                                <i class="fas fa-play" aria-hidden="true"></i>
+                                Initialize Predictor
+                            </button>
+                            <span id="init-description" class="sr-only">Initialize the AI model with current Premier League data</span>
+                            
+                            <button id="predict-btn" class="btn btn-secondary" type="button" disabled aria-describedby="predict-description">
+                                <i class="fas fa-crystal-ball" aria-hidden="true"></i>
+                                Get Predictions
+                            </button>
+                            <span id="predict-description" class="sr-only">Generate match predictions for the next gameweek</span>
                         </div>
                     </div>
-                    <div id="status-message" class="status-message"></div>
-                </div>
-            </div>
-        </section>
+                </article>
+            </section>
 
-        <!-- Control Section -->
-        <section class="control-section">
-            <div class="card">
-                <div class="card-content">
-                    <div class="control-buttons">
-                        <button id="init-btn" class="btn btn-primary">
-                            <i class="fas fa-play"></i>
-                            Initialize Predictor
-                        </button>
-                        <button id="predict-btn" class="btn btn-secondary" disabled>
-                            <i class="fas fa-crystal-ball"></i>
-                            Get Predictions
-                        </button>
+            <section id="loading-section" class="loading-section" style="display: none;" aria-labelledby="loading-heading">
+                <article class="card loading-card">
+                    <div class="card-content">
+                        <h2 id="loading-heading" class="sr-only">Loading Status</h2>
+                        <div class="loading-spinner" role="status" aria-live="polite">
+                            <div class="spinner" aria-hidden="true"></div>
+                            <p id="loading-text">Loading predictions...</p>
+                        </div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </article>
+            </section>
 
-        <!-- Loading Section -->
-        <section id="loading-section" class="loading-section" style="display: none;">
-            <div class="card">
-                <div class="card-content">
-                    <div class="loading-spinner">
-                        <div class="spinner"></div>
-                        <p id="loading-text">Loading...</p>
+            <section id="predictions-section" class="predictions-section" style="display: none;" aria-labelledby="predictions-heading">
+                <article class="card">
+                    <header class="card-header">
+                        <h2 id="predictions-heading"><i class="fas fa-calendar-alt" aria-hidden="true"></i> <span id="predictions-title">Match Predictions</span></h2>
+                    </header>
+                    <div class="card-content">
+                        <div id="predictions-content" class="predictions-content" role="region" aria-live="polite" aria-label="Match prediction results"></div>
                     </div>
-                </div>
-            </div>
-        </section>
+                </article>
+            </section>
+        </main>
 
-        <!-- Predictions Section -->
-        <section id="predictions-section" class="predictions-section" style="display: none;">
-            <div class="card">
-                <div class="card-header">
-                    <h2><i class="fas fa-calendar-alt"></i> <span id="predictions-title">Match Predictions</span></h2>
-                </div>
-                <div class="card-content">
-                    <div id="predictions-content" class="predictions-content"></div>
-                </div>
-            </div>
-        </section>
-
-        <!-- Footer -->
-        <footer class="footer">
-            <p>Powered by Fantasy Premier League API | Built with ❤️ for football fans</p>
+        <footer class="footer" role="contentinfo">
+            <address>
+                <p>Utilized Fantasy Premier League API</a> | Built with ❤️ for football fans</p>
+            </address>
         </footer>
     </div>
 
@@ -103,6 +198,8 @@
         document.addEventListener('DOMContentLoaded', function() {
             checkStatus();
             startStatusPolling();
+            // Auto-initialize and get predictions
+            autoInitializeAndPredict();
         });
 
         // Button event listeners
@@ -132,6 +229,16 @@
                     document.getElementById('init-btn').innerHTML = '<i class="fas fa-check"></i> Ready';
                     document.getElementById('init-btn').disabled = true;
                     hideLoading();
+                    
+                    // Automatically get predictions when model is ready
+                    setTimeout(() => {
+                        getPredictions();
+                    }, 500);
+                    
+                    // Track model initialization for analytics
+                    if (typeof trackModelInitialization === 'function') {
+                        trackModelInitialization();
+                    }
                 }
             } catch (error) {
                 console.error('Error checking status:', error);
@@ -217,9 +324,71 @@
                 content.innerHTML = '<p class="no-matches">No upcoming matches found.</p>';
             } else {
                 content.innerHTML = data.predictions.map(match => createMatchCard(match)).join('');
+                
+                // add structured data for predictions
+                addPredictionStructuredData(data);
+                
+                // track prediction generation for analytics
+                if (typeof trackPredictionEvent === 'function') {
+                    trackPredictionEvent(data.next_gameweek, data.predictions.length);
+                }
             }
             
             showPredictions();
+        }
+
+        function addPredictionStructuredData(data) {
+            // Remove existing prediction structured data
+            const existingScript = document.getElementById('prediction-structured-data');
+            if (existingScript) {
+                existingScript.remove();
+            }
+
+            // Create structured data for the predictions
+            const structuredData = {
+                "@context": "https://schema.org",
+                "@type": "SportsEvent",
+                "name": `Premier League Gameweek ${data.next_gameweek} Predictions`,
+                "description": `AI-powered match predictions for Premier League Gameweek ${data.next_gameweek}`,
+                "startDate": data.predictions[0]?.kickoff_time,
+                "sport": "Soccer",
+                "location": {
+                    "@type": "Place",
+                    "name": "Various Premier League Stadiums",
+                    "address": {
+                        "@type": "PostalAddress",
+                        "addressCountry": "GB"
+                    }
+                },
+                "organizer": {
+                    "@type": "SportsOrganization",
+                    "name": "Premier League",
+                    "url": "https://www.premierleague.com"
+                },
+                "subEvent": data.predictions.map(match => ({
+                    "@type": "SportsEvent",
+                    "name": `${match.home_team} vs ${match.away_team}`,
+                    "startDate": match.kickoff_time,
+                    "competitor": [
+                        {
+                            "@type": "SportsTeam",
+                            "name": match.home_team
+                        },
+                        {
+                            "@type": "SportsTeam", 
+                            "name": match.away_team
+                        }
+                    ],
+                    "description": `Predicted outcome: ${match.prediction}. Confidence: ${Math.round(match.confidence * 100)}%`
+                }))
+            };
+
+            // add structured data to page
+            const script = document.createElement('script');
+            script.type = 'application/ld+json';
+            script.id = 'prediction-structured-data';
+            script.textContent = JSON.stringify(structuredData);
+            document.head.appendChild(script);
         }
 
         function createMatchCard(match) {
@@ -237,10 +406,11 @@
 
             let probsHtml = '';
             if (match.probabilities && Object.keys(match.probabilities).length > 0) {
-                // Sort probabilities to ensure Draw is always in the middle
+                // draw always in the middle
                 const outcomes = Object.entries(match.probabilities);
                 const sortedOutcomes = outcomes.sort(([outcomeA], [outcomeB]) => {
-                    // Define the desired order: Home team (0), Draw (1), Away team (2)
+                    
+                    // defining order
                     const getOrder = (outcome) => {
                         if (outcome === match.home_team) return 0;
                         if (outcome === 'Draw') return 1;
@@ -305,6 +475,26 @@
 
         function hidePredictions() {
             document.getElementById('predictions-section').style.display = 'none';
+        }
+
+        async function autoInitializeAndPredict() {
+            // Check if we need to initialize
+            try {
+                const response = await fetch('/api/status');
+                const data = await response.json();
+                
+                if (!data.model_ready && !data.app_initialized) {
+                    // Need to initialize
+                    showLoading('Initializing predictor...');
+                    await initializePredictor();
+                } else if (data.model_ready) {
+                    // Model is ready, get predictions immediately
+                    await getPredictions();
+                }
+            } catch (error) {
+                console.error('Error during auto-initialization:', error);
+                showLoading('Unable to load predictions. Please check your connection.');
+            }
         }
     </script>
 </body>

@@ -103,6 +103,16 @@ def index():
     """Main page"""
     return render_template('index.html')
 
+@app.route('/robots.txt')
+def robots_txt():
+    """Serve robots.txt for SEO"""
+    return app.send_static_file('robots.txt')
+
+@app.route('/sitemap.xml')
+def sitemap_xml():
+    """Serve sitemap.xml for SEO"""
+    return app.send_static_file('sitemap.xml')
+
 @app.route('/api/status')
 def get_status():
     """Get current training status with cache and scheduler info"""

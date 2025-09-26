@@ -1,0 +1,45 @@
+User-agent: *
+Allow: /
+Allow: /static/
+Allow: /api/status
+Allow: /api/predict
+
+# Disallow admin or sensitive endpoints
+Disallow: /api/initialize
+Disallow: /api/retrain
+Disallow: /api/cache/
+
+# Sitemap location
+Sitemap: https://premierprophet.dev/static/sitemap.xml
+
+# Crawl delay (be respectful)
+Crawl-delay: 1
+
+# Allow common search engines
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: Slurp
+Allow: /
+
+User-agent: DuckDuckBot
+Allow: /
+
+User-agent: Baiduspider
+Allow: /
+
+User-agent: YandexBot
+Allow: /
+
+# Block unwanted bots
+User-agent: SemrushBot
+Disallow: /
+
+User-agent: AhrefsBot
+Disallow: /
+
+User-agent: MJ12bot
+Disallow: /

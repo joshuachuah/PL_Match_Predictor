@@ -1,0 +1,47 @@
+{
+    "name": "PremierProphet - AI Football Predictions",
+    "short_name": "PremierProphet",
+    "description": "AI-powered Premier League match predictions using real-time FPL data and machine learning",
+    "start_url": "/",
+    "display": "standalone",
+    "background_color": "#37003c",
+    "theme_color": "#37003c",
+    "orientation": "portrait-primary",
+    "categories": ["sports", "entertainment", "productivity"],
+    "lang": "en",
+    "dir": "ltr",
+    "icons": [
+        {
+            "src": "/static/icon-192x192.png",
+            "sizes": "192x192",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/static/icon-512x512.png",
+            "sizes": "512x512",
+            "type": "image/png",
+            "purpose": "maskable any"
+        },
+        {
+            "src": "/static/apple-touch-icon.png",
+            "sizes": "180x180",
+            "type": "image/png",
+            "purpose": "any"
+        }
+    ],
+    "screenshots": [
+        {
+            "src": "/static/screenshot-wide.png",
+            "sizes": "1280x720",
+            "type": "image/png",
+            "form_factor": "wide"
+        },
+        {
+            "src": "/static/screenshot-narrow.png",
+            "sizes": "750x1334",
+            "type": "image/png",
+            "form_factor": "narrow"
+        }
+    ]
+}

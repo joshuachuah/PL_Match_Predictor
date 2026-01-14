@@ -113,6 +113,68 @@ def sitemap_xml():
     """Serve sitemap.xml for SEO"""
     return app.send_static_file('sitemap.xml')
 
+@app.route('/api/health')
+def health_check():
+    """Health check endpoint for monitoring"""
+    global predictor, model_trained, app_initialized
+    
+    try:
+        health_status = {
+            'status': 'healthy',
+            'timestamp': datetime.now().isoformat(),
+            'checks': {
+                'app_initialized': app_initialized,
+                'predictor_available': predictor is not None,
+                'model_trained': model_trained,
+                'cache_manager_available': predictor.cache_manager is not None if predictor else False
+            }
+        }
+        
+        # Check if predictor is functioning
+        if predictor:
+            try:
+                # Try to get current gameweek as a basic functionality check
+                current_gw, next_gw = predictor.get_current_gameweek()
+                health_status['checks']['data_api_responsive'] = True
+                health_status['current_gameweek'] = current_gw
+                health_status['next_gameweek'] = next_gw
+            except Exception as e:
+                health_status['checks']['data_api_responsive'] = False
+                health_status['warnings'] = [f'Data API check failed: {str(e)}']
+                health_status['status'] = 'degraded'
+        else:
+            health_status['status'] = 'unhealthy'
+            health_status['message'] = 'Predictor not available'
+        
+        # Check model status
+        if predictor and model_trained:
+            health_status['checks']['model_ready'] = predictor.model.is_trained()
+        else:
+            health_status['checks']['model_ready'] = False
+        
+        # Determine overall status based on checks
+        if not app_initialized:
+            health_status['status'] = 'initializing'
+        elif not predictor:
+            health_status['status'] = 'unhealthy'
+        elif not model_trained:
+            health_status['status'] = 'degraded'
+            health_status['message'] = 'Model not trained yet'
+        
+        # Return appropriate HTTP status code
+        http_status = 200 if health_status['status'] == 'healthy' else 503
+        
+        return jsonify(health_status), http_status
+        
+    except Exception as e:
+        logger.error(f"Health check failed: {e}")
+        return jsonify({
+            'status': 'unhealthy',
+            'timestamp': datetime.now().isoformat(),
+            'error': str(e)
+        }), 503
+    
+
 @app.route('/api/status')
 def get_status():
     """Get current training status with cache and scheduler info"""
@@ -290,15 +352,11 @@ def ensure_initialized():
         thread.start()
 
 if __name__ == '__main__':
-    # Initialize app on startup when running directly
     logger.info("Starting FPL Match Predictor app...")
-    
-    # Start initialization in background
-    init_thread = threading.Thread(target=initialize_app, daemon=True)
-    init_thread.start()
-    
+
     # Get port from environment variable (for production) or default to 5000
     port = int(os.getenv('PORT', 5000))
     debug = os.getenv('FLASK_ENV', 'development') == 'development'
-    
+
+    # Initialization will happen automatically on first request via before_request hook
     app.run(debug=debug, host='0.0.0.0', port=port)

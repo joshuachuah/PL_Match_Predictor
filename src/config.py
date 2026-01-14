@@ -8,7 +8,7 @@ FPL_BASE_URL = "https://fantasy.premierleague.com/api/"
 FPL_BOOTSTRAP_ENDPOINT = "bootstrap-static/"
 FPL_FIXTURES_ENDPOINT = "fixtures/"
 
-# External Data Sources
+# External Data Sources (Historical match data)
 FOOTBALL_DATA_URL = "https://www.football-data.co.uk/mmz4281/2324/E0.csv"
 
 # Team ID Mapping (FPL team names to IDs)

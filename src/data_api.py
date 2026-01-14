@@ -40,6 +40,8 @@ class FPLDataAPI:
     
     def _process_bootstrap_data(self):
         """Process bootstrap data to extract teams and players"""
+
+        # transform raw API data into usable dictionaries
         if not self.bootstrap_data:
             return
             
@@ -122,10 +124,10 @@ class FPLDataAPI:
         all_historical_fixtures = []
         
         # Try to fetch data from previous seasons
-        # Note: This is a workaround since FPL API doesn't directly expose historical seasons
-        # We'll use archived data or simulate with current season patterns
+        # Note: This is a workaround since FPL API doesn't expose historical seasons
+        # Use archived data or simulate with current season patterns
         
-        # For now, let's use the current season data and simulate previous seasons
+        # use the current season data and simulate previous seasons
         # by treating early gameweeks as "previous seasons"
         current_fixtures = self.fetch_fixtures()
         
@@ -134,7 +136,6 @@ class FPLDataAPI:
             current_fixtures_sorted = sorted(current_fixtures, key=lambda x: x['event'] if x['event'] else 0)
             
             # Create simulated historical data by treating different gameweek ranges as different seasons
-            # This gives us more training data while maintaining realistic patterns
             
             season_1_fixtures = []  # Gameweeks 1-19 (first half)
             season_2_fixtures = []  # Gameweeks 20-38 (second half)
@@ -199,8 +200,7 @@ class FPLDataAPI:
         for season in historical_seasons:
             print(f"Trying to fetch data for season {season}...")
             try:
-                # Some API endpoints may have historical data
-                # This is speculative - would need to be verified
+                # trying my luck to see if the API endpoint has historical data
                 url = f"https://fantasy.premierleague.com/api/bootstrap-static/{season}/"
                 response = requests.get(url, timeout=5)
                 if response.status_code == 200:
@@ -214,7 +214,7 @@ class FPLDataAPI:
         # Method 2: Use football-data.co.uk (free historical data)
         print("Attempting to fetch from football-data.co.uk...")
         try:
-            # This is a free source of historical Premier League data
+            # source of historical Premier League data
             historical_url = "https://www.football-data.co.uk/mmz4281/2324/E0.csv"
             response = requests.get(historical_url, timeout=10)
             if response.status_code == 200:
@@ -266,7 +266,7 @@ class FPLDataAPI:
         team_mapping = {
             'Arsenal': 1, 'Aston Villa': 2, 'Brentford': 3, 'Brighton': 4,
             'Burnley': 5, 'Chelsea': 6, 'Crystal Palace': 7, 'Everton': 8,
-            'Fulham': 9, 'Liverpool': 10, 'Luton': 11, 'Man City': 12,
+            'Fulham': 9, 'Liverpool': 10, 'Leeds': 11, 'Man City': 12,
             'Man Utd': 13, 'Newcastle': 14, 'Nott\'m Forest': 15, 'Sheffield Utd': 16,
             'Tottenham': 17, 'West Ham': 18, 'Wolves': 19, 'Bournemouth': 20,
             # Alternative spellings

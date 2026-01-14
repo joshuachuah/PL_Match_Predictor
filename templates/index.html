@@ -406,21 +406,21 @@
 
             let probsHtml = '';
             if (match.probabilities && Object.keys(match.probabilities).length > 0) {
-                // draw always in the middle
-                const outcomes = Object.entries(match.probabilities);
+                // Filter out Draw and sort: home team first, away team second
+                const outcomes = Object.entries(match.probabilities)
+                    .filter(([outcome]) => outcome !== 'Draw');
+
                 const sortedOutcomes = outcomes.sort(([outcomeA], [outcomeB]) => {
-                    
-                    // defining order
+                    // Home team first (0), away team second (1)
                     const getOrder = (outcome) => {
                         if (outcome === match.home_team) return 0;
-                        if (outcome === 'Draw') return 1;
-                        if (outcome === match.away_team) return 2;
-                        return 3; // fallback
+                        if (outcome === match.away_team) return 1;
+                        return 2; // fallback
                     };
-                    
+
                     return getOrder(outcomeA) - getOrder(outcomeB);
                 });
-                
+
                 probsHtml = sortedOutcomes
                     .map(([outcome, prob]) => {
                         const percentage = Math.round(prob * 100);

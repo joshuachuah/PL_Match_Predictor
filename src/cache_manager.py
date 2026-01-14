@@ -26,33 +26,39 @@ class ModelCacheManager:
         self.model_file = self.cache_dir / "trained_model.pkl"
         self.scaler_file = self.cache_dir / "scaler.pkl"
         self.feature_selector_file = self.cache_dir / "feature_selector.pkl"
+        self.label_encoder_file = self.cache_dir / "label_encoder.pkl"
         self.metadata_file = self.cache_dir / "model_metadata.json"
         self.bootstrap_data_file = self.cache_dir / "bootstrap_data.json"
         self.training_data_file = self.cache_dir / "training_data.pkl"
         self.fixtures_cache_file = self.cache_dir / "fixtures_cache.json"
         
-    def save_model(self, model, scaler, feature_selector, feature_names: list, 
+    def save_model(self, model, scaler, feature_selector, label_encoder, feature_names: list,
                    training_metadata: Dict[str, Any]) -> bool:
         """Save trained model and associated components"""
         try:
             # save model components
             with open(self.model_file, 'wb') as f:
                 pickle.dump(model, f)
-            
+
             with open(self.scaler_file, 'wb') as f:
                 pickle.dump(scaler, f)
-                
+
             if feature_selector is not None:
                 with open(self.feature_selector_file, 'wb') as f:
                     pickle.dump(feature_selector, f)
-            
+
+            if label_encoder is not None:
+                with open(self.label_encoder_file, 'wb') as f:
+                    pickle.dump(label_encoder, f)
+
             # save metadata
             metadata = {
                 'trained_at': datetime.now().isoformat(),
                 'feature_names': feature_names,
                 'training_metadata': training_metadata,
                 'model_version': '1.0',
-                'has_feature_selector': feature_selector is not None
+                'has_feature_selector': feature_selector is not None,
+                'has_label_encoder': label_encoder is not None
             }
             
             with open(self.metadata_file, 'w') as f:
@@ -65,7 +71,7 @@ class ModelCacheManager:
             logger.error(f"Error saving model: {e}")
             return False
     
-    def load_model(self) -> Tuple[Any, Any, Any, list, Dict[str, Any]]:
+    def load_model(self) -> Tuple[Any, Any, Any, Any, list, Dict[str, Any]]:
         """Load trained model and associated components"""
         try:
             # check if all required files exist
@@ -75,32 +81,37 @@ class ModelCacheManager:
                 self.metadata_file.exists()
             ]):
                 logger.warning("Model cache files not found")
-                return None, None, None, [], {}
-            
+                return None, None, None, None, [], {}
+
             # load metadata first
             with open(self.metadata_file, 'r') as f:
                 metadata = json.load(f)
-            
-            # ;oad model components
+
+            # load model components
             with open(self.model_file, 'rb') as f:
                 model = pickle.load(f)
-            
+
             with open(self.scaler_file, 'rb') as f:
                 scaler = pickle.load(f)
-            
+
             feature_selector = None
             if metadata.get('has_feature_selector', False) and self.feature_selector_file.exists():
                 with open(self.feature_selector_file, 'rb') as f:
                     feature_selector = pickle.load(f)
-            
+
+            label_encoder = None
+            if metadata.get('has_label_encoder', False) and self.label_encoder_file.exists():
+                with open(self.label_encoder_file, 'rb') as f:
+                    label_encoder = pickle.load(f)
+
             feature_names = metadata.get('feature_names', [])
-            
+
             logger.info(f"Model loaded successfully from {self.cache_dir}")
-            return model, scaler, feature_selector, feature_names, metadata
+            return model, scaler, feature_selector, label_encoder, feature_names, metadata
             
         except Exception as e:
             logger.error(f"Error loading model: {e}")
-            return None, None, None, [], {}
+            return None, None, None, None, [], {}
     
     def save_bootstrap_data(self, bootstrap_data: Dict[str, Any]) -> bool:
         """Save FPL bootstrap data"""
